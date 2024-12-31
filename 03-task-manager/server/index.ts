@@ -12,7 +12,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Task Manager API");
 });
 
-app.use("/", tasks);
+app.use("/api/v1/tasks", tasks);
 
 // app.get("/api/v1/tasks") - get all tasks
 // app.post("/api/v1/tasks") - create a new task
