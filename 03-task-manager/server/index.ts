@@ -1,6 +1,9 @@
+require("./db/connect");
+require("dotenv").config();
 const express = require("express");
 const app: Express = express();
 const tasks = require("./routes/tasks");
+const connectDB = require("./db/connect");
 import { Express, Request, Response } from "express";
 
 //middleware
@@ -20,8 +23,15 @@ app.use("/api/v1/tasks", tasks);
 // app.patch("/api/v1/tasks/:id") - update a task
 // app.delete("/api/v1/tasks/:id") - delete a task
 
-const PORT = process.env.PORT || 3000;
+const start = async () => {
+  try {
+    await connectDB(process.env.CONNECTION_STRING);
+    app.listen(process.env.PORT, () => {
+      console.log(`Server is running on port ${process.env.PORT}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+start();
