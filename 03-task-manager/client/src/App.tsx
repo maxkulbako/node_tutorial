@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import "./App.css";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { ITask } from "./types/Task";
+import { Task } from "./components/Task";
+import { AddTask } from "./components/AddTask";
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+      <div className="flex justify-center">
+        <p className="text-3xl font-bold underline text-red-500">
+          Task Manager App
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <TaskList />
     </>
-  )
+  );
 }
 
-export default App
+const TaskList: React.FC = () => {
+  const [tasks, setTasks] = useState<ITask[]>([]);
+
+  const getTasks = async () => {
+    try {
+      const { data }: { data: { tasks: ITask[] } } = await axios.get(
+        "http://localhost:3000/api/v1/tasks"
+      );
+      setTasks(data.tasks);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addTask = async ({ name }: { name: string }) => {
+    try {
+      await axios.post("http://localhost:3000/api/v1/tasks", { name });
+      getTasks();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteTask = async (id: string) => {
+    try {
+      if (!id) return;
+      await axios.delete(`http://localhost:3000/api/v1/tasks/${id}`);
+      getTasks();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTasks();
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center gap-10  p-10">
+      <AddTask onAdd={addTask} />
+      {tasks.map((task) => (
+        <Task task={task} onDelete={deleteTask} key={task._id} />
+      ))}
+    </div>
+  );
+};
+
+export default App;

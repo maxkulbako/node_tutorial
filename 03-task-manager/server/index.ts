@@ -1,5 +1,7 @@
 require("./db/connect");
 require("dotenv").config();
+const morgan = require("morgan");
+const cors = require("cors");
 const express = require("express");
 const app: Express = express();
 const tasks: Router = require("./routes/tasks");
@@ -7,7 +9,11 @@ const connectDB = require("./db/connect");
 import { Express, Request, Response, Router } from "express";
 
 //middleware
+app.use(cors());
 app.use(express.json());
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms")
+);
 
 //routes
 app.get("/", (req: Request, res: Response) => {
