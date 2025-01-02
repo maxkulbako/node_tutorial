@@ -1,25 +1,68 @@
 import { Request, Response } from "express";
+const Task = require("../models/Task");
 
-const getAllTasks = (req: Request, res: Response) => {
-  res.send("All tasks");
+const getAllTasks = async (req: Request, res: Response) => {
+  try {
+    const tasks = await Task.find({});
+    res.status(200).json({ tasks });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
-const createTask = (req: Request, res: Response) => {
-  const { name } = req.body;
-  res.json({ success: true, data: `name: ${name}` });
+const createTask = async (req: Request, res: Response) => {
+  try {
+    const task = await Task.create(req.body);
+    res.status(201).json({ task });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
-const getSingleTask = (req: Request, res: Response) => {
-  const { id } = req.params;
-  res.send(`Get a single task with id: ${id}`);
+const getSingleTask = async (req: Request, res: Response) => {
+  try {
+    const { id: taskID } = req.params;
+    const task = await Task.findOne({ _id: taskID });
+    if (!task) {
+      return res.status(404).json({ msg: `No task with id: ${taskID}` });
+    }
+    res.status(200).json({ task });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
-const updateTask = (req: Request, res: Response) => {
-  res.send("Update a task");
+const updateTask = async (req: Request, res: Response) => {
+  const { id: taskID } = req.params;
+  try {
+    const task = await Task.findOneAndUpdate(
+      { _id: taskID },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!task) {
+      return res.status(404).json({ msg: `No task with id: ${taskID}` });
+    }
+    res.status(200).json({ id: taskID, data: task });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
-const deleteTask = (req: Request, res: Response) => {
-  res.send("Delete a task");
+const deleteTask = async (req: Request, res: Response) => {
+  try {
+    const { id: taskID } = req.params;
+    const task = await Task.findOneAndDelete({ _id: taskID });
+    if (!task) {
+      return res.status(404).json({ msg: `No task with id: ${taskID}` });
+    }
+    // res.status(200).json({ task: null, status: "success" });
+    // res.status(200).send("Task deleted");
+    // res.status(200).send();
+    res.status(200).json({ task });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
 module.exports = {

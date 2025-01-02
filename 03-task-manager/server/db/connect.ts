@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 import { Error } from "mongoose";
 
-const connectDB = async (url: string) => {
+const connectDB = async (url: string): Promise<void> => {
   return mongoose
     .connect(url)
     .then(() => {

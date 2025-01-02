@@ -2,9 +2,9 @@ require("./db/connect");
 require("dotenv").config();
 const express = require("express");
 const app: Express = express();
-const tasks = require("./routes/tasks");
+const tasks: Router = require("./routes/tasks");
 const connectDB = require("./db/connect");
-import { Express, Request, Response } from "express";
+import { Express, Request, Response, Router } from "express";
 
 //middleware
 app.use(express.json());
@@ -23,7 +23,7 @@ app.use("/api/v1/tasks", tasks);
 // app.patch("/api/v1/tasks/:id") - update a task
 // app.delete("/api/v1/tasks/:id") - delete a task
 
-const start = async () => {
+const start = async (): Promise<void> => {
   try {
     await connectDB(process.env.CONNECTION_STRING);
     app.listen(process.env.PORT, () => {
