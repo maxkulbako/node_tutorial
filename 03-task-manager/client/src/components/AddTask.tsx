@@ -13,11 +13,12 @@ export const AddTask = ({ onAdd }: AddTaskProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 w-1/2 h-96">
+    <div className="flex flex-col items-center gap-2 w-1/2 h-48 w-2/3">
       <form className="flex flex-col gap-5 w-full h-full items-center">
         <textarea
           placeholder="Task name"
           className="w-full h-full rounded-md p-2 text-2xl text-top resize-none"
+          value={taskName}
           onChange={(e) => setTaskName(e.target.value)}
         />
         <button
