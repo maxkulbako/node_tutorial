@@ -3,18 +3,24 @@ import { ITask } from "../types/Task";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
+interface APIResponse {
+  status: string;
+  data: {
+    task: ITask;
+  };
+}
+
 export const SingleTaskPage: React.FC = () => {
   const [task, setTask] = useState<ITask | null>(null);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   const getSingleTask = async (): Promise<void> => {
     try {
-      const { data } = await axios.get<{ task: ITask }>(
+      const { data }: { data: APIResponse } = await axios.get(
         `http://localhost:3000/api/v1/tasks/${id}`
       );
-      setTask(data.task);
+      setTask(data.data.task);
     } catch (error) {
       console.error("Failed to fetch the task:", error);
     }
@@ -25,8 +31,8 @@ export const SingleTaskPage: React.FC = () => {
     try {
       await axios.patch(`http://localhost:3000/api/v1/tasks/${id}`, {
         name: task.name,
+        completed: task.completed,
       });
-      console.log("Task name updated successfully");
     } catch (error) {
       getSingleTask();
       console.error("Failed to update the task name:", error);

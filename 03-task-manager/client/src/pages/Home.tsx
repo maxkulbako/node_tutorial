@@ -4,15 +4,23 @@ import { ITask } from "../types/Task";
 import { Task } from "../components/Task";
 import { AddTask } from "../components/AddTask";
 
+interface APIResponse {
+  status: string;
+  data: {
+    tasks: ITask[];
+    amount: number;
+  };
+}
+
 export const HomePage: React.FC = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
 
   const getTasks = async () => {
     try {
-      const { data }: { data: { tasks: ITask[] } } = await axios.get(
+      const { data }: { data: APIResponse } = await axios.get(
         "http://localhost:3000/api/v1/tasks"
       );
-      setTasks(data.tasks);
+      setTasks(data.data.tasks);
     } catch (error) {
       console.log(error);
     }
