@@ -6,7 +6,8 @@ const express = require("express");
 const app: Express = express();
 const tasks: Router = require("./routes/tasks");
 const connectDB = require("./db/connect");
-import { Express, Request, Response, Router } from "express";
+const notFound = require("./middleware/not-found");
+import { Express, Router } from "express";
 
 //middleware
 app.use(cors());
@@ -14,20 +15,8 @@ app.use(express.json());
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
-
-//routes
-app.get("/", (req: Request, res: Response) => {
-  console.log(req);
-  res.send("Task Manager API");
-});
-
 app.use("/api/v1/tasks", tasks);
-
-// app.get("/api/v1/tasks") - get all tasks
-// app.post("/api/v1/tasks") - create a new task
-// app.get("/api/v1/tasks/:id") - get a single task
-// app.patch("/api/v1/tasks/:id") - update a task
-// app.delete("/api/v1/tasks/:id") - delete a task
+app.use(notFound);
 
 const start = async (): Promise<void> => {
   try {
