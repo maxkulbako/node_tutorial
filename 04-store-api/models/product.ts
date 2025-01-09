@@ -1,6 +1,9 @@
+import { IProduct } from "../types/product";
+import { Schema } from "mongoose";
+
 const mongoose = require("mongoose");
 
-const productSchema = new mongoose.Schema({
+const productSchema: Schema<IProduct> = new mongoose.Schema({
   name: { type: String, required: [true, "product name must be provided"] },
   price: { type: Number, required: [true, "price price must be provided"] },
   featured: { type: Boolean, default: false },
