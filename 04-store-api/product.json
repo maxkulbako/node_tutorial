@@ -1,0 +1,124 @@
+{
+  "products": [
+    {
+      "name": "Leather Sofa",
+      "price": 999.99,
+      "featured": true,
+      "company": "caressa"
+    },
+    {
+      "name": "Dining Table Set",
+      "price": 599.99,
+      "featured": false,
+      "company": "ikea"
+    },
+    {
+      "name": "Queen Bed Frame",
+      "price": 449.99,
+      "featured": true,
+      "company": "caressa"
+    },
+    {
+      "name": "Bookshelf",
+      "price": 129.99,
+      "featured": false,
+      "company": "ikea"
+    },
+    {
+      "name": "Accent Chair",
+      "price": 259.99,
+      "featured": true,
+      "company": "marcos"
+    },
+    {
+      "name": "Coffee Table",
+      "price": 189.99,
+      "featured": false,
+      "company": "liddy"
+    },
+    {
+      "name": "Wardrobe Cabinet",
+      "price": 799.99,
+      "featured": true,
+      "company": "ikea"
+    },
+    {
+      "name": "TV Stand",
+      "price": 299.99,
+      "featured": false,
+      "company": "caressa"
+    },
+    {
+      "name": "Office Desk",
+      "price": 349.99,
+      "featured": true,
+      "company": "marcos"
+    },
+    {
+      "name": "Bedside Table",
+      "price": 79.99,
+      "featured": false,
+      "company": "ikea"
+    },
+    {
+      "name": "Sectional Sofa",
+      "price": 1299.99,
+      "featured": true,
+      "company": "liddy"
+    },
+    {
+      "name": "Kitchen Island",
+      "price": 449.99,
+      "featured": false,
+      "company": "caressa"
+    },
+    {
+      "name": "Recliner Chair",
+      "price": 499.99,
+      "featured": true,
+      "company": "marcos"
+    },
+    {
+      "name": "Bunk Bed",
+      "price": 699.99,
+      "featured": false,
+      "company": "ikea"
+    },
+    {
+      "name": "Console Table",
+      "price": 159.99,
+      "featured": true,
+      "company": "liddy"
+    },
+    {
+      "name": "Dining Chairs Set",
+      "price": 299.99,
+      "featured": false,
+      "company": "caressa"
+    },
+    {
+      "name": "Storage Ottoman",
+      "price": 129.99,
+      "featured": true,
+      "company": "marcos"
+    },
+    {
+      "name": "Wall Shelf Unit",
+      "price": 89.99,
+      "featured": false,
+      "company": "ikea"
+    },
+    {
+      "name": "King Mattress",
+      "price": 899.99,
+      "featured": true,
+      "company": "liddy"
+    },
+    {
+      "name": "Computer Desk",
+      "price": 249.99,
+      "featured": false,
+      "company": "caressa"
+    }
+  ]
+}
