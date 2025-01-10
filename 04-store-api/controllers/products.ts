@@ -7,9 +7,17 @@ import {
 const Product = require("../models/product");
 
 const getAllProducts: RequestHandler = async (req: Request, res: Response) => {
-  const { featured, company, name, sort, fields }: ProductRequestParams =
-    req.query;
+  const {
+    featured,
+    company,
+    name,
+    sort,
+    fields,
+    numericFilters,
+  }: ProductRequestParams = req.query;
+
   console.log(req.query);
+
   const queryObject: ProductRequestQuery = {};
   if (featured) {
     queryObject.featured = featured;
@@ -19,6 +27,28 @@ const getAllProducts: RequestHandler = async (req: Request, res: Response) => {
   }
   if (name) {
     queryObject.name = { $regex: name, $options: "i" };
+  }
+  if (numericFilters) {
+    const operatorMap: { [key: string]: string } = {
+      ">": "$gt",
+      ">=": "$gte",
+      "<": "$lt",
+      "<=": "$lte",
+    };
+
+    const regex: RegExp = /\b(>|<|>=|<=)\b/g;
+    let filters: string = numericFilters.replace(
+      regex,
+      (match) => `-${operatorMap[match]}-`
+    );
+    const options: string[] = ["price", "rating"];
+
+    filters.split(",").forEach((item) => {
+      const [field, operator, value] = item.split("-");
+      if (options.includes(field)) {
+        queryObject[field] = { [operator]: Number(value) };
+      }
+    });
   }
 
   let result = Product.find(queryObject);

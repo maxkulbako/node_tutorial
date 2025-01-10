@@ -7,6 +7,7 @@ export interface ProductRequestParams {
   limit?: number;
   sort?: string;
   fields?: string;
+  numericFilters?: string;
 }
 
 export interface ProductRequestQuery {
@@ -15,6 +16,7 @@ export interface ProductRequestQuery {
   name?: { $regex: string; $options: string };
   page?: number;
   limit?: number;
+  [key: string]: any;
 }
 
 // Product Interface (for database/response)
