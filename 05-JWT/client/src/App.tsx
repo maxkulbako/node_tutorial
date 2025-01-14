@@ -48,6 +48,7 @@ function App() {
 
   const getDashboardData = async () => {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.get<DashboardResponse>(
         "http://localhost:3000/api/v1/dashboard",
         {
